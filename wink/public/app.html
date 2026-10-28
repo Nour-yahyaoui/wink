@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W.I.N.K — Demo app</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='24'%20fill='%238b5cf6'/%3E%3Ctext%20x='50'%20y='70'%20font-size='54'%20font-family='Arial'%20font-weight='bold'%20text-anchor='middle'%20fill='white'%3EW%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="overlay show" id="loginOverlay">
+  <div class="auth-card">
+    <div class="auth-logo">W.I.N.K<span class="mascot-dot">.</span></div>
+    <div class="mascot-mini" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="84" height="84">
+        <circle cx="60" cy="60" r="56" fill="url(#face2)"/>
+        <defs><linearGradient id="face2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#e879f9"/></linearGradient></defs>
+        <circle cx="40" cy="52" r="9" fill="#0a0e27"/><circle cx="80" cy="52" r="9" fill="#0a0e27"/>
+        <circle cx="43" cy="49" r="3" fill="#fff"/><circle cx="83" cy="49" r="3" fill="#fff"/>
+        <path class="wink-lid" d="M66 52 q14 -14 28 0" fill="none" stroke="#0a0e27" stroke-width="9" stroke-linecap="round"/>
+        <path d="M40 78 q20 16 40 0" fill="none" stroke="#0a0e27" stroke-width="9" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Welcome to W.I.N.K</h1>
+    <p class="auth-sub">No friends? No problem. Sign in and we'll find people who share your hobbies — in FSM &amp; Monastir.</p>
+    <form id="loginForm">
+      <input type="text" id="loginName" placeholder="Your name" autocomplete="off" required>
+      <input type="text" id="loginInstagram" placeholder="Your @instagram (one account per Instagram)" autocomplete="off" required>
+      <button type="submit" class="btn btn-primary wide">Sign in →</button>
+    </form>
+    <p class="auth-note">Sign in with your name and @instagram — one account per Instagram. Step 2 builds your Instagram-style profile.</p>
+  </div>
+</div>
+
+<!-- ===================== PROFILE SETUP (sign-in step 2) ===================== -->
+<div class="overlay" id="profileSetup">
+  <div class="auth-card wide">
+    <div class="auth-logo">W.I.N.K<span class="mascot-dot">.</span></div>
+    <h1 id="psTitle">Build your profile</h1>
+    <p class="auth-sub">This is how people see you — pick your photos, write a bio, and choose your hobbies.</p>
+    <div class="ps-avatar-row">
+      <span class="avatar xbig ring" id="psAvatar"></span>
+      <div>
+        <div class="ps-name" id="psName"></div>
+        <div class="muted" id="psHandle"></div>
+      </div>
+    </div>
+    <div class="ps-label">Your photos <span class="muted">(tap a tile to change it)</span></div>
+    <div class="ig-grid" id="psPhotos"></div>
+    <label class="ps-label">Your bio
+      <input type="text" id="psBio" placeholder="e.g. CS student · coffee lover · always up for football">
+    </label>
+    <label class="ps-label">Your vibe
+      <input type="text" id="psSeek" placeholder="e.g. Friends to chill with, gamers welcome…">
+    </label>
+    <div class="ps-label">Your @instagram <span class="muted">— set at sign-in, it's your account</span>
+      <input type="text" id="psInstagramLock" value="" disabled>
+    </div>
+    <div class="ps-label">Your hobbies <span class="muted">(at least 2 — type one and press Enter)</span></div>
+    <div class="chips" id="psHobbiesTags"></div>
+    <input type="text" id="psHobbiesInput" placeholder="Type a hobby and press Enter (e.g. football)">
+    <div class="auth-actions">
+      <button class="btn btn-primary" id="psNext">Enter W.I.N.K 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== APP SHELL ===================== -->
+<div class="app-shell" id="appShell">
+
+  <header class="topbar">
+    <a class="brand" href="/">W.I.N.K<span class="brand-dot">.</span></a>
+    <div class="topbar-right">
+      <button class="icon-btn" id="bellBtn" title="Notifications">🔔<span class="bell-count" id="bellCount" hidden>0</span></button>
+      <button class="icon-btn" id="createBtn" title="Plan a meet">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <div class="api-banner" id="apiBanner" hidden>⚠️ Can't reach the server. Start it with <code>node server.js</code> and refresh.</div>
+
+    <!-- ===== DISCOVER: PEOPLE ===== -->
+    <section class="view show" id="view-discover">
+      <div class="view-head"><h1>People you'll love</h1><p class="muted">See their hobbies &amp; bio — tap <b>Yes</b> to meet</p></div>
+      <div class="story-strip" id="storyStrip"></div>
+      <div class="person-card" id="peopleCard"></div>
+      <div class="empty-state" id="peopleEmpty" style="display:none;">
+        <div class="empty-icon">💤</div>
+        <h3>No one online right now</h3>
+        <p>Discover only shows people who are online — sign in with another name in a second tab to meet them.</p>
+        <button class="btn btn-primary" data-action="reset-demo">↺ Reset demo</button>
+      </div>
+    </section>
+
+    <!-- ===== MEETS ===== -->
+    <section class="view" id="view-meets">
+      <div class="view-head"><h1>Meets</h1><p class="muted">Your plans + meetups happening now</p></div>
+      <div id="meetsRequests"></div>
+      <div id="meetsUpcoming"></div>
+      <div id="meetsPast"></div>
+      <div class="meets-browse">
+        <div class="section-title">🌐 Browse meetups</div>
+        <div class="feed-toolbar">
+          <div class="search-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="#9aa0b4" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="#9aa0b4" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="text" id="searchInput" placeholder="Search FSM & Monastir…">
+          </div>
+          <select id="sortFilter">
+            <option value="match">Match</option>
+            <option value="soon">Soon</option>
+            <option value="top">Top</option>
+          </select>
+        </div>
+        <div class="chips-row" id="hobbyFilter"></div>
+        <div class="meet-browse" id="meetsBrowse"></div>
+      </div>
+      <div class="empty-state" id="meetsEmpty" style="display:none;">
+        <div class="empty-icon">🤝</div>
+        <h3>No meets yet</h3>
+        <p>Say Yes to someone — or browse a meetup below.</p>
+        <button class="btn btn-primary" data-action="go-discover">Find people</button>
+      </div>
+    </section>
+
+    <!-- ===== INBOX (DMs) ===== -->
+    <section class="view" id="view-inbox">
+      <div class="view-head"><h1>Messages</h1><p class="muted">Your meetup groups</p></div>
+      <div class="conv-list" id="chatList"></div>
+    </section>
+
+    <!-- ===== CHAT THREAD (full screen) ===== -->
+    <section class="view" id="view-thread"></section>
+
+    <!-- ===== NOTIFICATIONS ===== -->
+    <section class="view" id="view-notifications">
+      <div class="view-head"><h1>Notifications</h1><p class="muted">What's happening with your meets</p></div>
+      <div id="notifList"></div>
+    </section>
+
+    <!-- ===== PROFILE ===== -->
+    <section class="view" id="view-profile">
+      <div class="profile-head">
+        <span class="avatar xbig ring" id="profileAvatar"></span>
+        <div class="profile-head-info">
+          <h1 id="profileName">—</h1>
+          <div class="ig-badge" id="profileIg"></div>
+          <p class="muted" id="profileBio"></p>
+        </div>
+      </div>
+      <div class="profile-stats" id="profileStats"></div>
+      <div class="highlights">
+        <button class="highlight"><span class="hl-ico">🏫</span>FSM</button>
+        <button class="highlight"><span class="hl-ico">🌊</span>Monastir</button>
+        <button class="highlight"><span class="hl-ico">📚</span>Study</button>
+        <button class="highlight"><span class="hl-ico">⚽</span>Sports</button>
+        <button class="highlight"><span class="hl-ico">🎮</span>Gaming</button>
+        <button class="highlight"><span class="hl-ico">🎵</span>Music</button>
+      </div>
+      <div class="profile-tabs">
+        <button class="ptab active" data-tab="stories">📸 Stories</button>
+        <button class="ptab" data-tab="meets">🎬 Meets</button>
+        <button class="ptab" data-tab="reviews">⭐ Reviews</button>
+      </div>
+      <div class="profile-pane" id="profilePaneStories">
+        <div class="story-row" id="profileStories"></div>
+      </div>
+      <div class="profile-pane" id="profilePaneMeets" style="display:none;">
+        <div class="ig-grid" id="profileMeets"></div>
+      </div>
+      <div class="profile-pane" id="profilePaneReviews" style="display:none;">
+        <div id="profileReviews"></div>
+      </div>
+      <div class="profile-foot">
+        <button class="reset-btn" id="resetBtn">↺ Reset demo (sign out & clear)</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== BOTTOM TAB BAR ===== -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" data-view="discover">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-tab" data-view="meets">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Meets</span>
+    </button>
+    <button class="nav-tab" data-view="inbox">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6.5C4 5.7 4.7 5 5.5 5h13c.8 0 1.5.7 1.5 1.5v9c0 .8-.7 1.5-1.5 1.5h-13C4.7 17 4 16.3 4 15.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 9.5h7M7 12.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Inbox</span>
+      <span class="nav-badge" id="navBadge" hidden>0</span>
+    </button>
+    <button class="nav-tab" data-view="profile">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- ===================== POST DETAIL MODAL ===================== -->
+<div class="modal-overlay" id="meetupModal">
+  <div class="modal">
+    <button class="modal-close" id="meetupClose" aria-label="Close">✕</button>
+    <div id="meetupModalBody"></div>
+  </div>
+</div>
+
+<!-- shared venue suggestions for free-text place inputs -->
+<datalist id="venueList"></datalist>
+
+<!-- ===================== CREATE MODAL ===================== -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal">
+    <button class="modal-close" id="createClose" aria-label="Close">✕</button>
+    <h2>Plan a meet</h2>
+    <p class="muted">Pick a place and time — people will see it instantly.</p>
+    <form id="createForm">
+      <label>Title<input type="text" id="createTitle" placeholder="e.g. Basketball 3v3 — FSM court" required></label>
+      <label>Description<textarea id="createDesc" rows="2" placeholder="What's the plan?"></textarea></label>
+      <label>Hobbies
+        <div class="chips" id="createHobbies"></div>
+      </label>
+      <div class="form-row">
+        <label>Place
+          <input list="venueList" type="text" id="createVenue" placeholder="Type a place…" required>
+        </label>
+        <label>Capacity
+          <select id="createCap">
+            <option value="4">4 people</option>
+            <option value="6" selected>6 people</option>
+            <option value="10">10 people</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Date<input type="date" id="createDate" required></label>
+        <label>Time<input type="time" id="createTime" value="18:00" required></label>
+      </div>
+      <button type="submit" class="btn btn-primary wide">Publish meetup</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== LOCATION MODAL ===================== -->
+<div class="modal-overlay" id="locModal">
+  <div class="modal">
+    <button class="modal-close" id="locClose" aria-label="Close">✕</button>
+    <h2>Send a meeting point</h2>
+    <p class="muted">Your group will see this card right in the chat.</p>
+    <label>Place
+      <input list="venueList" type="text" id="locVenue" placeholder="Type a place…" required>
+    </label>
+    <label>Time (optional)
+      <input type="time" id="locTime">
+    </label>
+    <label>Note (optional)
+      <input type="text" id="locNote" placeholder="e.g. I'll be at the main entrance">
+    </label>
+    <button class="btn btn-primary wide" id="locSend">Send location</button>
+  </div>
+</div>
+
+<!-- ===================== SUGGEST MEETING MODAL ===================== -->
+<div class="modal-overlay" id="suggestModal">
+  <div class="modal">
+    <button class="modal-close" id="suggestClose" aria-label="Close">✕</button>
+    <h2>Meet <span id="suggestName"></span>?</h2>
+    <p class="muted" id="suggestHint"></p>
+    <label>Where to meet
+      <input list="venueList" type="text" id="suggestVenue" placeholder="Type a place…" required>
+    </label>
+    <div class="form-row">
+      <label>Date<input type="date" id="suggestDate" required></label>
+      <label>Time<input type="time" id="suggestTime" value="18:00" required></label>
+    </div>
+    <button class="btn btn-ghost wide" id="suggestCancel">Not now</button>
+    <button class="btn btn-primary wide" id="suggestConfirm">Yes, let's meet 🎉</button>
+  </div>
+</div>
+
+<!-- ===================== MUTUAL MATCH — CHOOSE FSM LOCATION ===================== -->
+<div class="modal-overlay" id="mutualModal">
+  <div class="modal">
+    <button class="modal-close" id="mutualClose" aria-label="Close">✕</button>
+    <h2>🎉 You and <span id="mutualName"></span> both said yes!</h2>
+    <p class="muted">Pick a place in FSM to meet — it shows up on both your meetups.</p>
+    <div class="chips" id="mutualVenues"></div>
+    <label>Or type any place
+      <input list="venueList" type="text" id="mutualVenueInput" placeholder="Type a place…">
+    </label>
+    <button class="btn btn-primary wide" id="mutualConfirm">Confirm meeting place</button>
+  </div>
+</div>
+
+<!-- ===================== PERSON PROFILE MODAL ===================== -->
+<div class="modal-overlay" id="personModal">
+  <div class="modal wide">
+    <button class="modal-close" id="personClose" aria-label="Close">✕</button>
+    <div class="pp-head">
+      <span class="avatar xbig ring" id="ppAvatar"></span>
+      <div>
+        <h2 id="ppName"></h2>
+        <div class="ig-badge" id="ppHandle"></div>
+        <div class="pp-rate" id="ppRate"></div>
+      </div>
+    </div>
+    <p class="pp-bio" id="ppBio"></p>
+    <div class="pp-hobbies" id="ppHobbies"></div>
+    <div class="pp-stats" id="ppStats"></div>
+    <div class="ig-grid" id="ppPhotos"></div>
+    <div id="ppMeets"></div>
+    <button class="btn btn-primary wide" id="ppYes">Yes, meet this person 🎉</button>
+  </div>
+</div>
+
+<!-- ===================== SNAPCHAT-STYLE STORY VIEWER ===================== -->
+<div class="story-viewer" id="storyViewer">
+  <div class="sv-progress" id="svProgress"></div>
+  <div class="sv-top">
+    <span class="sv-avatar ring" id="svAvatar"></span>
+    <div class="sv-id">
+      <div class="sv-name" id="svName"></div>
+      <div class="sv-time" id="svTime"></div>
+    </div>
+    <button class="sv-close" id="svClose" aria-label="Close story">✕</button>
+  </div>
+  <div class="sv-stage" id="svStage">
+    <div class="sv-bg" id="svBg"></div>
+    <div class="sv-emoji" id="svEmoji"></div>
+    <div class="sv-caption" id="svCaption"></div>
+  </div>
+  <div class="sv-tap sv-tap-left" id="svTapLeft" aria-label="Previous"></div>
+  <div class="sv-tap sv-tap-right" id="svTapRight" aria-label="Next"></div>
+  <div class="sv-reply">
+    <input type="text" id="svReply" placeholder="Say something…">
+    <button class="btn btn-primary btn-small" id="svReplySend">Send</button>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# dependencies (zero in this project, but keep for safety)
+node_modules/
+
+# runtime data — seeded at boot, never commit user data
+data/*.json
+
+# logs
+*.log
+
+# env / secrets
+.env
+.env.*
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W.I.N.K — No friends? No problem.</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='24'%20fill='%238b5cf6'/%3E%3Ctext%20x='50'%20y='70'%20font-size='54'%20font-family='Arial'%20font-weight='bold'%20text-anchor='middle'%20fill='white'%3EW%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<div class="progress-bar"><span id="progress"></span></div>
+
+<!-- Presentation deck nav -->
+<div class="deck-nav" id="deckNav"></div>
+<div class="deck-counter"><span id="curSlide">01</span><span class="sep">/</span><span id="totalSlides">06</span></div>
+
+<main>
+
+  <!-- 01 — HERO -->
+  <section class="slide hero" id="s1">
+    <div class="mesh">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+      <span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <div class="hero-grid-deco"></div>
+
+    <div class="hero-bubbles">
+      <span class="bubble g1">SK</span>
+      <span class="bubble g2">⚽</span>
+      <span class="bubble g3">🎮</span>
+      <span class="bubble g4">HA</span>
+      <span class="bubble g5">📚</span>
+      <span class="bubble g6">🎸</span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="mascot reveal d1" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <circle cx="60" cy="60" r="56" fill="url(#face)"/>
+          <defs>
+            <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#C4A9D4"/><stop offset="1" stop-color="#E8B4C6"/>
+            </linearGradient>
+          </defs>
+          <circle cx="40" cy="52" r="9" fill="#0a0e27"/>
+          <circle cx="80" cy="52" r="9" fill="#0a0e27"/>
+          <circle cx="43" cy="49" r="3" fill="#fff"/>
+          <circle cx="83" cy="49" r="3" fill="#fff"/>
+          <path class="wink-lid" d="M66 52 q14 -14 28 0" fill="none" stroke="#0a0e27" stroke-width="9" stroke-linecap="round"/>
+          <path d="M40 78 q20 16 40 0" fill="none" stroke="#0a0e27" stroke-width="9" stroke-linecap="round"/>
+          <circle cx="24" cy="72" r="9" fill="#fb7185" opacity=".7"/>
+          <circle cx="96" cy="72" r="9" fill="#8FB8A4" opacity=".7"/>
+        </svg>
+      </div>
+
+      <a class="hero-badge reveal d1" href="/app">✦ Demo · FSM &amp; Monastir · Campus friendship app</a>
+      <h1 class="reveal d2">No friends?<br><span class="grad">No problem.</span></h1>
+      <p class="hero-sub reveal d3">W.I.N.K pairs you with students who share your hobbies — so every meet feels easy, safe and fun. Meet on the FSM campus or in Monastir, at a place and time you both choose.</p>
+      <div class="hero-actions reveal d4">
+        <a class="btn btn-primary" href="/app">Open the demo app <span class="arrow">↗</span></a>
+        <a class="btn btn-ghost" href="#s3">How it works</a>
+      </div>
+      <p class="hero-foot reveal d5">Sign in with Instagram · Matched by hobbies · Rated ★★★★★ after every meet</p>
+    </div>
+
+    <!-- floating glass "match" card -->
+    <div class="match-card reveal d3" aria-hidden="true">
+      <div class="mc-top">🎯 Matching you…</div>
+      <div class="mc-people">
+        <span class="mc-av" style="--h:#D96A4A">YB</span>
+        <span class="mc-av" style="--h:#7C9466">AT</span>
+        <span class="mc-av" style="--h:#BC527E">SK</span>
+        <span class="mc-av" style="--h:#D9A441">HA</span>
+      </div>
+      <div class="mc-line">Yasmine B. · 92% match · FSM Bibliothèque</div>
+      <div class="mc-chips">
+        <span>📚 Reading</span><span>💻 Coding</span><span>☕ Coffee</span>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true"><span></span>Scroll</div>
+  </section>
+
+  <!-- 02 — STATS / INFOGRAPH -->
+  <section class="slide" id="s2">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">The numbers</p>
+      <h2 class="reveal d1">Loneliness is silent.<br><span class="grad-text">Connection isn't.</span></h2>
+      <div class="stats-grid">
+        <div class="stat-card reveal d1"><div class="stat-icon">🎓</div><div class="stat-num" data-count="1200" data-suffix="+">0</div><div class="stat-label">Students on W.I.N.K in FSM &amp; Monastir</div></div>
+        <div class="stat-card reveal d2"><div class="stat-icon">🤝</div><div class="stat-num" data-count="38" data-suffix="">0</div><div class="stat-label">Meetups planned this month</div></div>
+        <div class="stat-card reveal d3"><div class="stat-icon">💕</div><div class="stat-num" data-count="520" data-suffix="">0</div><div class="stat-label">New friendships formed</div></div>
+        <div class="stat-card reveal d4"><div class="stat-icon">⭐</div><div class="stat-num" data-count="4.9" data-suffix="★" data-decimals="1">0</div><div class="stat-label">Average rating of a WINK meet</div></div>
+      </div>
+      <div class="stats-chart reveal d4">
+        <div class="chart-head"><span>Meetups by month</span><span>demo data</span></div>
+        <svg viewBox="0 0 480 120" class="chart" aria-hidden="true">
+          <g>
+            <rect class="bar" x="8"  y="70" width="30" height="50"  rx="6"/>
+            <rect class="bar" x="58" y="55" width="30" height="65"  rx="6"/>
+            <rect class="bar" x="108" y="62" width="30" height="58"  rx="6"/>
+            <rect class="bar" x="158" y="48" width="30" height="72"  rx="6"/>
+            <rect class="bar" x="208" y="40" width="30" height="80"  rx="6"/>
+            <rect class="bar" x="258" y="34" width="30" height="86"  rx="6"/>
+            <rect class="bar" x="308" y="44" width="30" height="76"  rx="6"/>
+            <rect class="bar" x="358" y="26" width="30" height="94"  rx="6"/>
+            <rect class="bar" x="408" y="18" width="30" height="102" rx="6"/>
+            <line x1="4" y1="116" x2="476" y2="116" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+          </g>
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#C4A9D4"/><stop offset="1" stop-color="#E8B4C6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — HOW IT WORKS -->
+  <section class="slide" id="s3">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">How it works</p>
+      <h2 class="reveal d1">From zero friends to real ones —<br><span class="grad-text">in 4 steps</span></h2>
+      <div class="steps">
+        <div class="step reveal d1"><div class="step-num">1</div><div class="step-icon">📷</div><h3>Sign in with Instagram</h3><p>One tap. Your photos, name and bio come with you — no long forms.</p></div>
+        <div class="step reveal d2"><div class="step-num">2</div><div class="step-icon">🎯</div><h3>Pick your vibe</h3><p>Choose your hobbies and what you're looking for. Matching happens instantly.</p></div>
+        <div class="step reveal d3"><div class="step-num">3</div><div class="step-icon">📍</div><h3>Discover &amp; join</h3><p>Browse meetups across FSM campus and Monastir. Pick a spot, a time — join.</p></div>
+        <div class="step reveal d4"><div class="step-num">4</div><div class="step-icon">⭐</div><h3>Meet, rate, repeat</h3><p>Show up, leave a 5-star rating and a comment, then meet again.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — FEATURES -->
+  <section class="slide" id="s4">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Features</p>
+      <h2 class="reveal d1">Everything for an easier<br><span class="grad-text">first hello</span></h2>
+      <div class="features">
+        <div class="feature reveal d1"><div class="feature-icon">🧩</div><h3>Hobby matching</h3><p>Every meetup shows your match % — people like you, near you.</p></div>
+        <div class="feature reveal d2"><div class="feature-icon">📅</div><h3>Plans with a place &amp; time</h3><p>Pin a spot on the FSM campus or in Monastir and pick a time. Everyone gets the plan.</p></div>
+        <div class="feature reveal d3"><div class="feature-icon">🛡️</div><h3>Small groups, opt-in only</h3><p>Capped capacity and double opt-in — no awkward giant hangouts.</p></div>
+        <div class="feature reveal d1"><div class="feature-icon">⭐</div><h3>Star ratings &amp; comments</h3><p>After every meet, rate from 1 to 5 stars and leave a comment.</p></div>
+        <div class="feature reveal d2"><div class="feature-icon">🔁</div><h3>Meet again, one click</h3><p>Reschedule the same meet — good friends aren't a one-time thing.</p></div>
+        <div class="feature reveal d3"><div class="feature-icon">📸</div><h3>Instagram-powered</h3><p>Your profile and photos come from Instagram. Media optimized &amp; fast.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 — PLACES -->
+  <section class="slide" id="s5">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Places</p>
+      <h2 class="reveal d1">Your campus.<br><span class="grad-text">Your city.</span></h2>
+      <div class="places">
+        <div class="places-map reveal d1">
+          <svg viewBox="0 0 560 340" aria-hidden="true">
+            <rect width="560" height="340" rx="20" fill="#0d1330"/>
+            <path d="M0,250 Q140,215 280,240 T560,235 L560,340 L0,340 Z" fill="#161e42"/>
+            <path d="M0,250 Q140,215 280,240 T560,235" fill="none" stroke="#2b3a68" stroke-width="3"/>
+            <g opacity=".55">
+              <rect x="60" y="60" width="70" height="48" rx="6" fill="#1c264d"/>
+              <rect x="150" y="44" width="60" height="64" rx="6" fill="#1c264d"/>
+              <rect x="240" y="80" width="80" height="44" rx="6" fill="#1c264d"/>
+              <rect x="350" y="52" width="64" height="56" rx="6" fill="#1c264d"/>
+              <rect x="430" y="96" width="80" height="50" rx="6" fill="#1c264d"/>
+            </g>
+            <g stroke="#33405f" stroke-width="3" opacity=".7">
+              <line x1="0" y1="150" x2="560" y2="150"/>
+              <line x1="0" y1="200" x2="560" y2="200"/>
+              <line x1="180" y1="0" x2="180" y2="340"/>
+              <line x1="380" y1="0" x2="380" y2="340"/>
+            </g>
+            <g class="map-pin" transform="translate(140,120)"><circle r="22" class="pulse"/><circle r="9" fill="#D96A4A"/><circle r="3.5" fill="#fff"/><text x="0" y="-34" text-anchor="middle" fill="#E8C9A8" font-size="13" font-family="Arial" font-weight="700">FSM Campus</text></g>
+            <g class="map-pin" transform="translate(255,160)"><circle r="22" class="pulse"/><circle r="9" fill="#E8B4C6"/><circle r="3.5" fill="#fff"/><text x="0" y="-34" text-anchor="middle" fill="#F0D2DE" font-size="13" font-family="Arial" font-weight="700">Bibliothèque</text></g>
+            <g class="map-pin" transform="translate(350,110)"><circle r="22" class="pulse"/><circle r="9" fill="#D9A441"/><circle r="3.5" fill="#fff"/><text x="0" y="-34" text-anchor="middle" fill="#F3D9A4" font-size="13" font-family="Arial" font-weight="700">Stade universitaire</text></g>
+            <g class="map-pin" transform="translate(455,190)"><circle r="22" class="pulse"/><circle r="9" fill="#8FB8A4"/><circle r="3.5" fill="#fff"/><text x="0" y="-34" text-anchor="middle" fill="#B8D8C8" font-size="13" font-family="Arial" font-weight="700">Corniche</text></g>
+            <g class="map-pin" transform="translate(190,215)"><circle r="22" class="pulse"/><circle r="9" fill="#4F7A94"/><circle r="3.5" fill="#fff"/><text x="0" y="-34" text-anchor="middle" fill="#A9C2D4" font-size="13" font-family="Arial" font-weight="700">Marina</text></g>
+          </svg>
+        </div>
+        <div class="places-info reveal d2">
+          <p>Meetups are planned around places students already know — so the first hello is easy.</p>
+          <div class="venue-chips">
+            <span>FSM Campus</span><span>Amphithéâtre</span><span>Bibliothèque</span>
+            <span>Stade universitaire</span><span>Cafétéria</span>
+            <span>Bourguiba</span><span>Corniche</span><span>Marina</span><span>Plage Skikda</span><span>Centre culturel</span>
+          </div>
+          <a class="btn btn-primary" href="/app">See live meetups <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — CTA -->
+  <section class="slide cta-slide" id="s6">
+    <div class="slide-inner cta-inner">
+      <div class="quote-card reveal d1">
+        <div class="quote-stars">★★★★★</div>
+        <p>“I joined my first WINK meet at the FSM library. Three of us now study together every week.”</p>
+        <div class="quote-author">Yasmine B., 20, FSM · Student</div>
+      </div>
+      <h2 class="reveal d2">Your first hello<br><span class="grad-text">is one wink away.</span></h2>
+      <div class="hero-actions reveal d3">
+        <a class="btn btn-primary big" href="/app">Open the demo app <span class="arrow">↗</span></a>
+      </div>
+      <p class="hero-foot reveal d4">No real login — just a demo. Sign in with any name and explore.</p>
+    </div>
+    <footer class="deck-footer">© 2026 W.I.N.K · Demo concept · Made for FSM &amp; Monastir</footer>
+  </section>
+
+</main>
+
+<script src="js/landing.js"></script>
+</body>
+</html>
