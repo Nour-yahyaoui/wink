@@ -1,13 +1,12 @@
 # W.I.N.K 🤝
 
-> **No friends? No problem.**  
-> A people-first campus meetup platform connecting students at **FSM (Faculté des Sciences de Monastir)** and **Monastir** through shared hobbies.
+> **Purpose-first, in-person activity matching for students at FSM (Faculté des Sciences de Monastir).**
 
 ---
 
 ## 👥 Team & Planning (`/plan`)
 
-W.I.N.K is built with a clear separation between **product vision** and **technical architecture**—planned first inside [`/plan`](./plan) before implementation:
+W.I.N.K is built with a clear separation between **product vision** and **technical architecture**—documented inside [`/plan`](./plan) before any production code is implemented:
 
 | Role | Lead | Blueprint |
 |---|---|---|
@@ -18,8 +17,8 @@ W.I.N.K is built with a clear separation between **product vision** and **techni
 
 ## 🛠️ Planned Production Stack
 
-- **Phase 1 (Unified Full-Stack):** **Next.js** full-stack application deployed on **Vercel** for rapid iteration on the product specs in [`plan/iyed.md`](./plan/iyed.md).
-- **Phase 2 (Service Split):** Dedicated **Next.js** `frontend/` on **Vercel** + standalone `backend/` API & real-time service on **Render**.
+- **Phase 1 (Unified Full-Stack):** **Next.js** full-stack application deployed on **Vercel**, implementing the approved FSM product flows in [`plan/iyed.md`](./plan/iyed.md).
+- **Phase 2 (Service Split):** Dedicated **Next.js** `frontend/` on **Vercel** + standalone `backend/` API service on **Render**.
 - **Authentication:** **Google OAuth**
 - **Database:** **NeonDB** (Serverless PostgreSQL)
 - **Media & Image Storage:** **Vercel Blob**
@@ -31,7 +30,7 @@ W.I.N.K is built with a clear separation between **product vision** and **techni
 ```text
 .
 ├── plan/                 # Role-based blueprints before coding
-│   ├── iyed.md           # Product vision, user flows & UX specs (@iyedomri)
+│   ├── iyed.md           # FSM product vision, matching rules & MVP scope (@iyedomri)
 │   └── nour.md           # Technical stack, architecture & infra plan (@Nour-yahyaoui)
 │
 ├── frontend/             # Production Next.js frontend (Vercel + Google OAuth + Vercel Blob)
@@ -39,11 +38,11 @@ W.I.N.K is built with a clear separation between **product vision** and **techni
 ├── backend/              # Production backend service (Phase 2 Render split)
 ├── backend-demo/         # Demo & prototype backend sandbox
 ├── database/             # Production NeonDB (PostgreSQL) schemas & migrations
-├── database-demo/        # Seed scripts, fixtures & preview-branch demo datasets
+├── database-demo/        # Seed scripts, contrasting intent fixtures & demo datasets
 │
 ├── security/             # Ledger of every security vulnerability found & fixed
 ├── used_skills/          # AI-learned skills, engineering patterns & project notes
-├── wink/                 # Initial zero-dependency Node.js concept prototype
+├── wink/                 # Earlier zero-dependency Node.js concept prototype
 │
 ├── CONTRIBUTORS.md       # Project creators & roles
 ├── CONTRIBUTING.md       # Workflow, branch & PR conventions
@@ -54,9 +53,9 @@ W.I.N.K is built with a clear separation between **product vision** and **techni
 
 ---
 
-## ⚡ Running the Initial Concept Prototype (`/wink`)
+## ⚡ Running the Earlier Concept Prototype (`/wink`)
 
-While Phase 1 awaits product alignment in [`plan/iyed.md`](./plan/iyed.md), you can run the original zero-dependency concept demo (Node.js `>= 18`):
+While MVP implementation awaits review and open-decision sign-off in [`plan/iyed.md`](./plan/iyed.md), the initial zero-dependency demo remains runnable (Node.js `>= 18`):
 
 ```bash
 cd wink
@@ -65,7 +64,7 @@ node server.js
 
 - **Presentation Deck:** `http://localhost:8000`
 - **Demo App:** `http://localhost:8000/app`
-- **Prototype Docs & REST API:** [`wink/README.md`](./wink/README.md)
+- **Prototype Docs:** [`wink/README.md`](./wink/README.md)
 
 ---
 
