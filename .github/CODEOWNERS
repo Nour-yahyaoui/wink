@@ -1,0 +1,17 @@
+# Default repository owners
+* @Nour-yahyaoui @iyedomri
+
+# Role-specific planning docs
+/plan/iyed.md @iyedomri
+/plan/nour.md @Nour-yahyaoui
+
+# Technical architecture, workspaces, security & AI skills
+/frontend/ @Nour-yahyaoui
+/frontend-demo/ @Nour-yahyaoui
+/backend/ @Nour-yahyaoui
+/backend-demo/ @Nour-yahyaoui
+/database/ @Nour-yahyaoui
+/database-demo/ @Nour-yahyaoui
+/security/ @Nour-yahyaoui
+/used_skills/ @Nour-yahyaoui
+SECURITY.md @Nour-yahyaoui
