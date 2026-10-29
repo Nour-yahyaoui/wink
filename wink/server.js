@@ -588,7 +588,7 @@ async function apiMeetups(req, res, url) {
   });
 
   const shaped = list.map((m) => shape(m, u)); // shape once — sorting reads cached fields
-  if (sort === 'match') shaped.sort((a, b) => (a.match || 0) - (b.match || 0));
+  if (sort === 'match') shaped.sort((a, b) => (b.match || 0) - (a.match || 0));
   else if (sort === 'soon') shaped.sort((a, b) => new Date(a.date) - new Date(b.date));
   else if (sort === 'top') shaped.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
 

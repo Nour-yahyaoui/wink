@@ -1,0 +1,674 @@
+/* ==========================================================================
+   W.I.N.K — Semantic Design Tokens & Layout System
+   Ancestor: FSM Campus Noticeboard (Monastir Limestone, Fountain Ink & Kiln Terracotta)
+   See /docs/STYLE.md for ancestor derivations and rejected recipes.
+   ========================================================================== */
+
+:root {
+  /* Typography — Display serif + Humanist working sans + Data-only mono */
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type Scale (ratio >= 1.5 across primary hierarchy; survives greyscale) */
+  --text-xs: 0.6875rem;   /* 11px — mono uppercase labels & timestamps */
+  --text-sm: 0.875rem;    /* 14px — secondary metadata & compact controls */
+  --text-base: 1rem;      /* 16px — minimum body text */
+  --text-lg: 1.25rem;     /* 20px — card & section headings */
+  --text-xl: 1.875rem;    /* 30px — view titles */
+  --text-2xl: 2.875rem;   /* 46px — masthead display */
+
+  /* 4px Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  /* Radii — index card geometry */
+  --radius-sm: 4px;
+  --radius: 6px;
+
+  /* Light Palette — Monastir Limestone Daylight */
+  --bg: #F8F5EE;
+  --card: #FFFCF6;
+  --subtle: #EFEADF;
+  --fg: #1F1D1A;
+  --muted: #696257;
+  --border: #DDD6C7;
+  --border-strong: #C4B9A5;
+
+  /* One Primary Accent (~5% surface budget: primary CTA, seal, focus ring) */
+  --primary: #B44326;
+  --primary-hover: #96351C;
+  --primary-fg: #FFFCF6;
+  --primary-tint: #F9ECE7;
+
+  /* Semantic Status Tokens (always paired with icon + text label) */
+  --success: #2A6342;
+  --success-bg: #EBF4EE;
+  --warning: #9C5D16;
+  --warning-bg: #FDF4E7;
+  --danger: #A62626;
+  --danger-bg: #FDECEC;
+
+  /* Floating-only shadow (modals, coach marks — NEVER on flat cards) */
+  --shadow-float: 0 18px 42px rgba(31, 29, 26, 0.18);
+  --backdrop: rgba(20, 19, 17, 0.56);
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg: #141311;
+  --card: #1D1B18;
+  --subtle: #272420;
+  --fg: #F2EDE3;
+  --muted: #A69E91;
+  --border: #312D27;
+  --border-strong: #464037;
+
+  --primary: #E06B4B;
+  --primary-hover: #EB7D5F;
+  --primary-fg: #141311;
+  --primary-tint: #2B1C18;
+
+  --success: #58B37C;
+  --success-bg: #182920;
+  --warning: #E5A24C;
+  --warning-bg: #2B2115;
+  --danger: #E56B6B;
+  --danger-bg: #2C1919;
+
+  --shadow-float: 0 20px 48px rgba(0, 0, 0, 0.55);
+  --backdrop: rgba(8, 8, 7, 0.72);
+}
+
+/* Base Reset & Craft Details */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  transition: background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Tabular numerals — mandatory craft rule */
+table,
+.num,
+.mono-label,
+time,
+code,
+pre {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Shell & Asymmetric 12-Col Layout */
+.board-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-8);
+}
+
+@media (min-width: 640px) {
+  .board-shell {
+    padding: 0 var(--space-6) var(--space-8);
+  }
+}
+
+/* Top Masthead */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.brand-stamp {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--primary);
+  border-radius: 1px;
+  margin-left: 2px;
+}
+
+.masthead-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Editorial Asymmetric Intro Band */
+.editorial-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 1024px) {
+  .editorial-header {
+    grid-template-columns: 7fr 5fr;
+    align-items: end;
+    gap: var(--space-8);
+  }
+}
+
+.display-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, var(--text-2xl));
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.07;
+  margin: var(--space-2) 0 0;
+  max-width: 20ch;
+}
+
+.editorial-lede {
+  margin: 0;
+  color: var(--muted);
+  max-width: 58ch;
+  font-size: var(--text-base);
+}
+
+/* Main 12-Col Asymmetric Grid (Left Rail + Main Board) */
+.asymmetric-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding-top: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .asymmetric-grid {
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.left-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .left-rail {
+    position: sticky;
+    top: var(--space-4);
+    padding-right: var(--space-5);
+    border-right: 1px solid var(--border);
+  }
+}
+
+.rail-section {
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.rail-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Canonical Buttons (44px min touch height on mobile, crisp states) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  color: var(--fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--subtle);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-fg);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-danger {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btn-sm {
+  min-height: 38px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+/* Navigation Tabs */
+.board-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-5);
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.tab-btn:hover {
+  color: var(--fg);
+}
+
+.tab-btn[aria-selected="true"] {
+  color: var(--fg);
+  border-bottom-color: var(--primary);
+}
+
+.tab-count {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--subtle);
+  color: var(--fg);
+}
+
+/* Index Slips & Hairline Lists (zero drop shadow on flat surfaces) */
+.slip-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.request-row {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 720px) {
+  .request-row {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: var(--space-6);
+    align-items: start;
+  }
+}
+
+/* Signature Element: Two-Half Perforated Campus Match Slip */
+.perforated-slip {
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.slip-upper {
+  padding: var(--space-5);
+}
+
+.slip-perforation {
+  position: relative;
+  border-top: 2px dashed var(--border-strong);
+  margin: 0;
+  height: 0;
+}
+
+.slip-perforation::before,
+.slip-perforation::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+}
+
+.slip-perforation::before {
+  left: -9px;
+}
+
+.slip-perforation::after {
+  right: -9px;
+}
+
+.slip-lower {
+  padding: var(--space-5);
+  background: var(--subtle);
+}
+
+/* 5-Axis Compatibility Matrix Table */
+.axis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.axis-cell {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+}
+
+/* Status Badges */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: var(--subtle);
+  color: var(--fg);
+}
+
+.status-pill.is-confirmed {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.status-pill.is-pending {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.status-pill.is-cancelled {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* Form Controls */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.input-control,
+.select-control,
+.textarea-control {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.textarea-control {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.input-control[aria-invalid="true"],
+.select-control[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.field-error {
+  font-size: var(--text-sm);
+  color: var(--danger);
+  margin: 0;
+}
+
+/* Skeleton Shimmer (layout-matched, no custom gradient) */
+@keyframes pulseOpacity {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.skeleton-block {
+  background: var(--subtle);
+  border-radius: var(--radius-sm);
+  animation: pulseOpacity 1.5s ease-in-out infinite;
+}
+
+/* Modals & Floating Dialogs (only surfaces allowed --shadow-float) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  overflow-y: auto;
+}
+
+.modal-panel {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-float);
+  padding: var(--space-6);
+}
+
+/* Data Tables */
+.data-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: var(--subtle);
+}
+
+.data-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Toast Banner (non-blocking confirmations) */
+.toast-region {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  left: var(--space-4);
+  z-index: 45;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.toast-card {
+  pointer-events: auto;
+  max-width: 420px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* Reduced Motion — kills transitions & animations globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Stylesheet — mandatory craft rule */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print,
+  .masthead-actions,
+  .board-tabs,
+  .toast-region {
+    display: none !important;
+  }
+  .asymmetric-grid {
+    display: block !important;
+  }
+  .perforated-slip {
+    break-inside: avoid;
+    border-color: #000000 !important;
+  }
+}
