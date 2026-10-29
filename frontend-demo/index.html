@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>W.I.N.K — FSM Campus Activity &amp; Mutual-Meetup Board</title>
+    <meta
+      name="description"
+      content="Purpose-first, mutual-choice in-person activity board for students at Faculté des Sciences de Monastir (FSM). LocalStorage DB demo."
+    />
+    <!-- Bespoke non-letter favicon: two-part perforated terracotta & limestone campus match slip -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='8' width='52' height='48' rx='4' fill='%23F8F5EE' stroke='%231F1D1A' stroke-width='3'/%3E%3Cline x1='8' y1='34' x2='56' y2='34' stroke='%23B44326' stroke-width='2.5' stroke-dasharray='4 4'/%3E%3Ccircle cx='6' cy='34' r='4.5' fill='%231F1D1A'/%3E%3Ccircle cx='58' cy='34' r='4.5' fill='%231F1D1A'/%3E%3Ccircle cx='22' cy='21' r='5' fill='%23B44326'/%3E%3Crect x='32' y='18' width='18' height='6' rx='1' fill='%231F1D1A'/%3E%3Crect x='14' y='43' width='36' height='5' rx='1' fill='%232A6342'/%3E%3C/svg%3E"
+    />
+    <!-- Blocking inline script before paint — prevents dark/light FOUC -->
+    <script>
+      try {
+        var saved = localStorage.getItem('wink:theme');
+        var resolved =
+          saved === 'dark' || saved === 'light'
+            ? saved
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.setAttribute('data-theme', resolved);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
