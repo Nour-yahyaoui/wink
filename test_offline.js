@@ -30,7 +30,8 @@ global.fetch = async () => { throw new Error('offline'); }; // simulate no serve
 global.confirm = () => true;
 global.navigator = { clipboard: { writeText: async () => {} } };
 
-require('/home/user/wink/public/js/app.js');
+const path = require('path');
+require(path.join(__dirname, 'wink/public/js/app.js'));
   const { doLogin, enterApp, boot, localApi, openPersonModal, getLocalMode, getLocalDB } = window.__wink;
 
 (async () => {

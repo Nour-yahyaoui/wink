@@ -1,14 +1,13 @@
 # `database/` — Production Database Layer (NeonDB)
 
-> **Status:** Planned — schema design pending [`/plan/iyed.md`](../plan/iyed.md) sign-off
+> **Status:** Planned — awaiting final sign-off on open decisions in [`/plan/iyed.md`](../plan/iyed.md)
 
 ## Overview
 Production relational database workspace targeting **NeonDB (Serverless PostgreSQL)**.
 
-## Planned Contents
-- **Schema Definitions:** Core tables for `users`, `oauth_accounts`, `profiles`, `hobbies`, `meetups`, `meetup_participants`, `messages`, `reviews`, and `media_blobs` (storing **Vercel Blob** URLs and metadata).
-- **Migrations:** Version-controlled, repeatable SQL / ORM migrations.
-- **Indexes & Constraints:** Referential integrity, unique constraints, and query performance indexes.
-- **Security Rules:** Parameterized query helpers and least-privilege database role guidelines.
-
-See [`/plan/nour.md`](../plan/nour.md) for how `database/` connects to Phase 1 (Next.js on Vercel) and Phase 2 (Render backend).
+## Planned Schema Focus (Aligned with `/plan/iyed.md` & `/plan/nour.md`)
+- **Identity & Auth:** `users`, `oauth_accounts` (Google OAuth), and FSM eligibility metadata.
+- **Structured Activity Requests:** `activity_requests` with explicit `activity`, `purpose`, `role_needed`, `availability`, and `fsm_location` fields so incompatible intents never match.
+- **Mutual Choice & Logistics:** `choices`, `meet_proposals`, and transactional plan status tracking (`open`, `pending_mutual`, `arranging_details`, `confirmed`, `completed`, `cancelled`, `expired`).
+- **Media & Safety:** `media_blobs` (**Vercel Blob** URLs & metadata), `reports`, and `blocks`.
+- **Migrations & Security:** Version-controlled SQL/ORM migrations and strictly parameterized queries.
