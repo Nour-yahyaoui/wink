@@ -44,7 +44,8 @@ const legacyDb = {
 store['wink_local_db'] = JSON.stringify(legacyDb);
 store['wink_token'] = 'legacy-token';
 
-require('/home/user/wink/public/js/app.js');
+const path = require('path');
+require(path.join(__dirname, 'wink/public/js/app.js'));
 const { boot, doLogin, localApi, getLocalDB, getLocalMode } = window.__wink;
 
 (async () => {
